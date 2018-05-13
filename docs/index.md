@@ -6,6 +6,10 @@ This uses the Google Cloud Translate API,
 pandoc, and the panflute library to create
 a translation filter for Markdown files.
 
+See an example here: [russian-rainbow-mind-machine](https://pages.charlesreid1.com/russian-rainbow-mind-machine)
+(page contains documentation for the [rainbow-mind-machine](https://pages.charlesreid1.com/b-rainbow-mind-machine)
+library translated into Russian).
+
 [How this repo is organized](Organization.md)
 
 ## Part 1: Google Cloud Translate API Setup
