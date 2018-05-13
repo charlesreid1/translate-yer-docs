@@ -16,7 +16,7 @@ theme:
     primary: 'indigo'
     accent: 'indigo'
   logo:
-    icon: 'settings_input_component'
+    icon: 'g_translate insert_drive_file'
   font:
     text: 'Ubuntu'
     code: 'Ubuntu Mono'
