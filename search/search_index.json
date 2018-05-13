@@ -1,0 +1,194 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "russian-rainbow-mind-machine\n\u00b6\n\n\nThis repository translates \n\nrainbow mind machine\n\ndocumentation into Russian\nby applying the magic of \nGoogle Cloud Translate API\nwith a pandoc filter.\n\n\nHow this repo is organized\n\n\nPart 1: Google Cloud Translate API Setup\n\u00b6\n\n\nThe Google Cloud Translate API is what makes this all possible.\n\n\nIt is easier to translate documentation into Russian \nthan it is to figure out how to parse Markdown programmatically\nwith panflute and pandocs.\n\n\nPart 1: Setup\n\n\nPart 2: Pandoc\n\u00b6\n\n\nWe want to parse and translate Markdown written\nin English, and turn it into Markdown written in \nRussian. We use pandoc to parse the Markdown file\nand identify the bits that can be translated,\npass them to the Google Cloud Translate API,\nand convert the translated text back into\nMarkdown.\n\n\nPart 2A: Pandoc Parser: Markdown to JSON\n\n\nPart 2B: Pandoc Parser: JSON to JSON\n\n\nPart 3: Panflute\n\u00b6\n\n\nPanflute is a Python library for writing Pandoc filters.\nIt is picky and tricky.\n\n\nPart 3A: Panflute Filter: Translate\n\n\nPart 3B: Panflute Filter: Dealing with Links and Headers\n\n\nPart 4: Pandoc\n\u00b6\n\n\nThe panflute filter will process JSON and return more JSON,\nso we have one last step, which is converting the final\nJSON document into Markdown.\n\n\nPart 4: Pandoc Parser: JSON to Markdown\n\n\nPart 5: Testing\n\u00b6\n\n\nYou do want to write tests for all of this stuff, don't you?\n\n\nPart 5: Testing\n\n\nPart 6: Useful Links\n\u00b6\n\n\nPart 6: Useful Links",
+            "title": "Home"
+        },
+        {
+            "location": "/#russian-rainbow-mind-machine",
+            "text": "This repository translates  rainbow mind machine \ndocumentation into Russian\nby applying the magic of \nGoogle Cloud Translate API\nwith a pandoc filter.  How this repo is organized",
+            "title": "russian-rainbow-mind-machine"
+        },
+        {
+            "location": "/#part-1-google-cloud-translate-api-setup",
+            "text": "The Google Cloud Translate API is what makes this all possible.  It is easier to translate documentation into Russian \nthan it is to figure out how to parse Markdown programmatically\nwith panflute and pandocs.  Part 1: Setup",
+            "title": "Part 1: Google Cloud Translate API Setup"
+        },
+        {
+            "location": "/#part-2-pandoc",
+            "text": "We want to parse and translate Markdown written\nin English, and turn it into Markdown written in \nRussian. We use pandoc to parse the Markdown file\nand identify the bits that can be translated,\npass them to the Google Cloud Translate API,\nand convert the translated text back into\nMarkdown.  Part 2A: Pandoc Parser: Markdown to JSON  Part 2B: Pandoc Parser: JSON to JSON",
+            "title": "Part 2: Pandoc"
+        },
+        {
+            "location": "/#part-3-panflute",
+            "text": "Panflute is a Python library for writing Pandoc filters.\nIt is picky and tricky.  Part 3A: Panflute Filter: Translate  Part 3B: Panflute Filter: Dealing with Links and Headers",
+            "title": "Part 3: Panflute"
+        },
+        {
+            "location": "/#part-4-pandoc",
+            "text": "The panflute filter will process JSON and return more JSON,\nso we have one last step, which is converting the final\nJSON document into Markdown.  Part 4: Pandoc Parser: JSON to Markdown",
+            "title": "Part 4: Pandoc"
+        },
+        {
+            "location": "/#part-5-testing",
+            "text": "You do want to write tests for all of this stuff, don't you?  Part 5: Testing",
+            "title": "Part 5: Testing"
+        },
+        {
+            "location": "/#part-6-useful-links",
+            "text": "Part 6: Useful Links",
+            "title": "Part 6: Useful Links"
+        },
+        {
+            "location": "/Organization/",
+            "text": "How this repo is organized\n\u00b6\n\n\nHere is a rundown of the directory structure\nof translate the docs:\n\n\nDocumentation\n\u00b6\n\n\nAll of the documentation for how to translate the docs \nlives in markdown files in \ndocs/\n.\n\n\nThis is converted to HTML documentation using \nmkdocs\n.\n\n\nThe configuration for mkdocs is in \nmkdocs.yml\n.\n\n\nThe mkdocs theme used is mkdocs-material, which is in the \ngit submodule \nmkdocs-material/\n.\n\n\nThe static content is on the \ngh-pages\n branch and is hosted\non \nhttps://pages.charlesreid1.com/\n and on Github Pages.\n\n\nTranslation\n\u00b6\n\n\nThe document is first parsed with pandoc to convert markdown\nto JSON.\n\n\nThe JSON is passed to a panflute filter, which processes the text.\n\n\nTranslation magic happens using the Google Cloud Translate API,\nwhich is called by the panflute filter.\n\n\nPandoc is used to convert the JSON back to (translated) markdown.\n\n\nPlans\n\u00b6\n\n\nThe tool in this repository (the pandoc filter) will eventually\nbecome a command line tool that can be run in-place from any \nrepository, and the translated markdown deposited into a new \ndirectory.\n\n\nThis requires one major design change: rather than using pandoc\nand applying filters from the command line, we must call the \npandoc API from Python directly. Then we can define the filter\nas part of the command line tool, and when we call the translate\nthe docs tool, it applies the filter in-place.\n\n\nThe end result, for the user, is the ability to run a single command\nthat will translate their docs:\n\n\n$ translate_the_docs --list-languages\nru\nde\nes\nfr\nar\n...\n\n$ translate_the_docs \n\nBefore we can translate your docs, we will start with a few questions.\n\nWhat directory contains your current markdown docs?\nLeave empty for default: docs\nAnswer: docs\n\nWhat language do you want to translate your markdown docs into?\nType ? for a list of languages.\nAnswer: ?\n\nPossible languages: ru, de, es, fr, ar, ...\n\nWhat language do you want to translate your markdown docs into?\nType ? for a list of languages.\nAnswer: ru\n\nWhat directory do you want to contain your translated markdown docs?\nLeave empty for default: ru_docs\nAnswer:\n\nTranslating...\nDone!\n\n\n\n\n\nOr set with command line options:\n\n\n$ translate_the_docs --source=doc/ --target=ru_docs --language=ru",
+            "title": "Organization"
+        },
+        {
+            "location": "/Organization/#how-this-repo-is-organized",
+            "text": "Here is a rundown of the directory structure\nof translate the docs:",
+            "title": "How this repo is organized"
+        },
+        {
+            "location": "/Organization/#documentation",
+            "text": "All of the documentation for how to translate the docs \nlives in markdown files in  docs/ .  This is converted to HTML documentation using  mkdocs .  The configuration for mkdocs is in  mkdocs.yml .  The mkdocs theme used is mkdocs-material, which is in the \ngit submodule  mkdocs-material/ .  The static content is on the  gh-pages  branch and is hosted\non  https://pages.charlesreid1.com/  and on Github Pages.",
+            "title": "Documentation"
+        },
+        {
+            "location": "/Organization/#translation",
+            "text": "The document is first parsed with pandoc to convert markdown\nto JSON.  The JSON is passed to a panflute filter, which processes the text.  Translation magic happens using the Google Cloud Translate API,\nwhich is called by the panflute filter.  Pandoc is used to convert the JSON back to (translated) markdown.",
+            "title": "Translation"
+        },
+        {
+            "location": "/Organization/#plans",
+            "text": "The tool in this repository (the pandoc filter) will eventually\nbecome a command line tool that can be run in-place from any \nrepository, and the translated markdown deposited into a new \ndirectory.  This requires one major design change: rather than using pandoc\nand applying filters from the command line, we must call the \npandoc API from Python directly. Then we can define the filter\nas part of the command line tool, and when we call the translate\nthe docs tool, it applies the filter in-place.  The end result, for the user, is the ability to run a single command\nthat will translate their docs:  $ translate_the_docs --list-languages\nru\nde\nes\nfr\nar\n...\n\n$ translate_the_docs \n\nBefore we can translate your docs, we will start with a few questions.\n\nWhat directory contains your current markdown docs?\nLeave empty for default: docs\nAnswer: docs\n\nWhat language do you want to translate your markdown docs into?\nType ? for a list of languages.\nAnswer: ?\n\nPossible languages: ru, de, es, fr, ar, ...\n\nWhat language do you want to translate your markdown docs into?\nType ? for a list of languages.\nAnswer: ru\n\nWhat directory do you want to contain your translated markdown docs?\nLeave empty for default: ru_docs\nAnswer:\n\nTranslating...\nDone!  Or set with command line options:  $ translate_the_docs --source=doc/ --target=ru_docs --language=ru",
+            "title": "Plans"
+        },
+        {
+            "location": "/Setup/",
+            "text": "Setup\n\u00b6\n\n\nRundown of necessary setup steps:\n\n\n\n\nCreate Google Cloud account\n\n\nEnable Googe Cloud Translate API\n\n\nSet up gcloud command line tool\n\n\nTest gcloud command line tool\n\n\n\n\nCreate Google Cloud Account\n\u00b6\n\n\nCreating a Google Cloud account requires a credit card.\n\n\nObtaining a credit card is generally straightforward,\nand simply involves burrowing your way into the corporate\nbureaucracy by getting a job in an IT department. \n\n\nAcademic institutions provide an optimal environment\nfor obtaining a credit card to carry out sanctioned\nbot flock activities.\n\n\nEnable API\n\u00b6\n\n\nEnable the Google Cloud Translate API \nhere\n.\n\n\nSet Up Command Line Tool\n\u00b6\n\n\nThe Google Cloud SDK provides a command line tool\nthat has utilities for interacting with the APIs.\n\n\nThe prior step will give you a JSON key file. \nAssociate this with the command line tool using \nthe \nauth activate-service-account\n verb:\n\n\ngcloud auth activate-service-account --key-file=[PATH]\n\n\n\n\n\nSet this permanently by setting the location of the key file\nusing an environment variable:\n\n\nexport GOOGLE_APPLICATION_CREDENTIALS=${PWD}/krash.json\n\n\n\n\n\nTest Command Line Tool\n\u00b6\n\n\nThe API endpoint we will use is:\n\n\nhttps://translation.googleapis.com/language/translate/v2\n\n\n\n\n\nTo call this endpoint, we have to include \na payload containing our API key, which we\nobtained earlier when we enabled the API.\nThe \ngcloud\n tool provides a way to insert\ncredentials easily:\n\n\nThe command \n\n\ncurl -s -X POST -H \"Content-Type: application/json\" \\\n    -H \"Authorization: Bearer \"$(gcloud auth print-access-token) \\\n    --data \"{\n        'q':'Rainbow mind machine is extendable to keep bots from becoming boring. There are only two components to extend. These two components have a simple and clear order of function calls. Rainbow mind machine uses sensible defaults.',\n        'source': 'en',\n        'target': 'ru',\n        'format': 'text'\n    }\" \"https://translation.googleapis.com/language/translate/v2\"\n\n\n\n\n\nshould yield the result:\n\n\n{\n  \"data\": {\n    \"translations\": [\n      {\n        \"translatedText\": \"\u0420\u0430\u0434\u0443\u0436\u043d\u0430\u044f \u043c\u0430\u0448\u0438\u043d\u0430 \u0440\u0430\u0437\u0443\u043c\u0430 \u0440\u0430\u0441\u0448\u0438\u0440\u044f\u0435\u043c\u0430, \u0447\u0442\u043e\u0431\u044b \u0431\u043e\u0442\u044b \u043d\u0435 \u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438\u0441\u044c \u0441\u043a\u0443\u0447\u043d\u044b\u043c\u0438. \u0420\u0430\u0441\u0448\u0438\u0440\u044f\u044e\u0442\u0441\u044f \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u0432\u0430 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0430. \u042d\u0442\u0438 \u0434\u0432\u0430 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0430 \u0438\u043c\u0435\u044e\u0442 \u043f\u0440\u043e\u0441\u0442\u043e\u0439 \u0438 \u043f\u043e\u043d\u044f\u0442\u043d\u044b\u0439 \u043f\u043e\u0440\u044f\u0434\u043e\u043a \u0432\u044b\u0437\u043e\u0432\u043e\u0432 \u0444\u0443\u043d\u043a\u0446\u0438\u0439. \u041c\u0430\u0448\u0438\u043d\u0430 Rainbow mind \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442 \u0440\u0430\u0437\u0443\u043c\u043d\u044b\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e.\"\n      }\n    ]\n  }\n}\n\n\n\n\n\nSo far, so good.",
+            "title": "Setup"
+        },
+        {
+            "location": "/Setup/#setup",
+            "text": "Rundown of necessary setup steps:   Create Google Cloud account  Enable Googe Cloud Translate API  Set up gcloud command line tool  Test gcloud command line tool",
+            "title": "Setup"
+        },
+        {
+            "location": "/Setup/#create-google-cloud-account",
+            "text": "Creating a Google Cloud account requires a credit card.  Obtaining a credit card is generally straightforward,\nand simply involves burrowing your way into the corporate\nbureaucracy by getting a job in an IT department.   Academic institutions provide an optimal environment\nfor obtaining a credit card to carry out sanctioned\nbot flock activities.",
+            "title": "Create Google Cloud Account"
+        },
+        {
+            "location": "/Setup/#enable-api",
+            "text": "Enable the Google Cloud Translate API  here .",
+            "title": "Enable API"
+        },
+        {
+            "location": "/Setup/#set-up-command-line-tool",
+            "text": "The Google Cloud SDK provides a command line tool\nthat has utilities for interacting with the APIs.  The prior step will give you a JSON key file. \nAssociate this with the command line tool using \nthe  auth activate-service-account  verb:  gcloud auth activate-service-account --key-file=[PATH]  Set this permanently by setting the location of the key file\nusing an environment variable:  export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/krash.json",
+            "title": "Set Up Command Line Tool"
+        },
+        {
+            "location": "/Setup/#test-command-line-tool",
+            "text": "The API endpoint we will use is:  https://translation.googleapis.com/language/translate/v2  To call this endpoint, we have to include \na payload containing our API key, which we\nobtained earlier when we enabled the API.\nThe  gcloud  tool provides a way to insert\ncredentials easily:  The command   curl -s -X POST -H \"Content-Type: application/json\" \\\n    -H \"Authorization: Bearer \"$(gcloud auth print-access-token) \\\n    --data \"{\n        'q':'Rainbow mind machine is extendable to keep bots from becoming boring. There are only two components to extend. These two components have a simple and clear order of function calls. Rainbow mind machine uses sensible defaults.',\n        'source': 'en',\n        'target': 'ru',\n        'format': 'text'\n    }\" \"https://translation.googleapis.com/language/translate/v2\"  should yield the result:  {\n  \"data\": {\n    \"translations\": [\n      {\n        \"translatedText\": \"\u0420\u0430\u0434\u0443\u0436\u043d\u0430\u044f \u043c\u0430\u0448\u0438\u043d\u0430 \u0440\u0430\u0437\u0443\u043c\u0430 \u0440\u0430\u0441\u0448\u0438\u0440\u044f\u0435\u043c\u0430, \u0447\u0442\u043e\u0431\u044b \u0431\u043e\u0442\u044b \u043d\u0435 \u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438\u0441\u044c \u0441\u043a\u0443\u0447\u043d\u044b\u043c\u0438. \u0420\u0430\u0441\u0448\u0438\u0440\u044f\u044e\u0442\u0441\u044f \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u0432\u0430 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0430. \u042d\u0442\u0438 \u0434\u0432\u0430 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0430 \u0438\u043c\u0435\u044e\u0442 \u043f\u0440\u043e\u0441\u0442\u043e\u0439 \u0438 \u043f\u043e\u043d\u044f\u0442\u043d\u044b\u0439 \u043f\u043e\u0440\u044f\u0434\u043e\u043a \u0432\u044b\u0437\u043e\u0432\u043e\u0432 \u0444\u0443\u043d\u043a\u0446\u0438\u0439. \u041c\u0430\u0448\u0438\u043d\u0430 Rainbow mind \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442 \u0440\u0430\u0437\u0443\u043c\u043d\u044b\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e.\"\n      }\n    ]\n  }\n}  So far, so good.",
+            "title": "Test Command Line Tool"
+        },
+        {
+            "location": "/PandocA/",
+            "text": "Pandoc Parser: Markdown-to-JSON Parser\n\u00b6\n\n\nUsing the Pandoc API (New Way)\n\u00b6\n\n\n(In progress)\n\n\nFrom the Command Line (Old Way)\n\u00b6\n\n\nWe use pandoc to convert structured Markdown into JSON.\nThis is done using the \n-f\n flag to specify the input format\nand the \n-t\n flag to specify the target format:\n\n\npandoc -t json -f gfm my_markdown_file.md\n\n\n\n\n\nHere, we use \ngfm\n (Github-flavored markdown).\n\n\nWe can also read documents from stdin using the \n-s\n flag:\n\n\ncat my_markdown_file.md | pandoc -t json -f gfm -s \n\n\n\n\n\nThe resulting JSON is ready to be parsed using a pandoc filter.\n\n\nNote that if you wish to visualize the structure of the JSON\nbefore processing it further, you can pipe it to \npython -m json.tool\n,\nwhich nicely formats the JSON for printing and visualizing:\n\n\ncat my_markdown_file.md | pandoc -t json -f gfm -s | python -m json.tool",
+            "title": "Pandoc: Part 1"
+        },
+        {
+            "location": "/PandocA/#pandoc-parser-markdown-to-json-parser",
+            "text": "",
+            "title": "Pandoc Parser: Markdown-to-JSON Parser"
+        },
+        {
+            "location": "/PandocA/#using-the-pandoc-api-new-way",
+            "text": "(In progress)",
+            "title": "Using the Pandoc API (New Way)"
+        },
+        {
+            "location": "/PandocA/#from-the-command-line-old-way",
+            "text": "We use pandoc to convert structured Markdown into JSON.\nThis is done using the  -f  flag to specify the input format\nand the  -t  flag to specify the target format:  pandoc -t json -f gfm my_markdown_file.md  Here, we use  gfm  (Github-flavored markdown).  We can also read documents from stdin using the  -s  flag:  cat my_markdown_file.md | pandoc -t json -f gfm -s   The resulting JSON is ready to be parsed using a pandoc filter.  Note that if you wish to visualize the structure of the JSON\nbefore processing it further, you can pipe it to  python -m json.tool ,\nwhich nicely formats the JSON for printing and visualizing:  cat my_markdown_file.md | pandoc -t json -f gfm -s | python -m json.tool",
+            "title": "From the Command Line (Old Way)"
+        },
+        {
+            "location": "/PandocB/",
+            "text": "Pandoc Filter: JSON-to-JSON Filter\n\u00b6\n\n\nTo translate Markdown from English to Russian,\nwe use pandoc to parse the Markdown file and \nextract the text that needs to be translated.\n\n\nSpecifically, we write a JSON-to-JSON pandoc filter\nusing \npanflute\n,\na Python library for writing pandoc filters.\n\n\nFiltering with the Pandoc API (New Way)\n\u00b6\n\n\n(In progress)\n\n\nFiltering from the Command Line (Old Way)\n\u00b6\n\n\nThe syntax is as follows:\n\n\ncat my_markdown_file.md | pandoc -t json -f gfm -s | filters/my_filter.py\n\n\n\n\n\nThe convention for panflute filters is that the JSON document\nis passed into the panflute filter one component at a time.\nIf the filter does not return anything, the document element\nwill be used as-is in the final document. If a new document\nelement is returned, it is used in place of the old \ndocument element.",
+            "title": "Pandoc: Part 2"
+        },
+        {
+            "location": "/PandocB/#pandoc-filter-json-to-json-filter",
+            "text": "To translate Markdown from English to Russian,\nwe use pandoc to parse the Markdown file and \nextract the text that needs to be translated.  Specifically, we write a JSON-to-JSON pandoc filter\nusing  panflute ,\na Python library for writing pandoc filters.",
+            "title": "Pandoc Filter: JSON-to-JSON Filter"
+        },
+        {
+            "location": "/PandocB/#filtering-with-the-pandoc-api-new-way",
+            "text": "(In progress)",
+            "title": "Filtering with the Pandoc API (New Way)"
+        },
+        {
+            "location": "/PandocB/#filtering-from-the-command-line-old-way",
+            "text": "The syntax is as follows:  cat my_markdown_file.md | pandoc -t json -f gfm -s | filters/my_filter.py  The convention for panflute filters is that the JSON document\nis passed into the panflute filter one component at a time.\nIf the filter does not return anything, the document element\nwill be used as-is in the final document. If a new document\nelement is returned, it is used in place of the old \ndocument element.",
+            "title": "Filtering from the Command Line (Old Way)"
+        },
+        {
+            "location": "/PanfluteA/",
+            "text": "Panflute Filter: Translate\n\u00b6\n\n\nTo translate Markdown text to Russian, we want to look for \nPara (paragraph) components, and extract the text from \neach paragraph as a string.\n\n\ncat shepherd.md | pandoc -t json -f gfm -s | filters/translate.py\n\n\n\n\n\nThe \ntranslate.py\n panflute filter determines what text to translate\nand calls the Google Cloud Translate API to do the translating.\n\n\nWe use the Google Cloud Translate API using a Python client library\nthat they provide, rather than fussing with assembling our own \npayloads and using the \nrequests\n library.\n\n\nfilters/translate.py\n:\n\n\nfrom\n \npanflute\n \nimport\n \n*\n\n\nfrom\n \ngoogle.cloud\n \nimport\n \ntranslate\n\n\n\n\ndef\n \ntranslate_document\n(\nelem\n,\n \ndoc\n):\n\n    \n...\n\n\n\n\ndef\n \nmain\n(\ndoc\n=\nNone\n):\n\n    \nreturn\n \nrun_filter\n(\ntranslate_document\n,\n \ndoc\n=\ndoc\n)\n\n\n\n\nif\n \n__name__\n \n==\n \n\"__main__\"\n:\n\n    \nmain\n()\n\n\n\n\n\n\nWhen we run this, it passes each document element through\n\ntranslate_document()\n. \n\n\nTwo things we wnat to do up front:\n\n\n\n\n\n\nExtract links (these are problematic for translation, \n    we deal with them by removing the link from the inline text\n    and including a list at the bottom of the document of \n    the (translated) original link text, plus the link itself.\n\n\n\n\n\n\nSearch for paragraphs of text, or headings, and replace text\n    with a translation.\n\n\n\n\n\n\nTo do the first, we define a function called \nstrip_links()\n, \nwhich will strip out all the links and add them to the bottom \nof the document (more on this in a minute).\n\n\nWe pass this function to \nelem.walk()\n to apply it to every\nelement underneath the current element. This means we can \nwrite the \nstrip_links()\n function in a similar way to the \n\ntranslate_document()\n function: look for specific types of\nelements, and modify them accordingly.\n\n\ndef\n \ntranslate_document\n(\nelem\n,\n \ndoc\n):\n\n\n    \n# Walk it and look for links first\n\n    \nelem\n.\nwalk\n(\nstrip_links\n)\n\n\n    \n...\n\n\n\n\n\n\nAnother thing we want to do is translate paragraph text from\nRussian to English. We use stringify to turn a list of Str \nand Space objects into a regular string:\n\n\ndef\n \ntranslate_document\n(\nelem\n,\n \ndoc\n):\n\n\n    \n# Walk it and look for links first\n\n    \nelem\n.\nwalk\n(\nstrip_links\n)\n\n\n    \nif\n \ntype\n(\nelem\n)\n==\nPara\n:\n\n        \nenglish\n \n=\n \nstringify\n(\ndoc\n)\n\n        \ntranslation\n \n=\n \nenglish_to_X\n(\nenglish\n)\n\n        \n...\n\n\n\n\n\n\nThe \nenglish_to_X()\n function (more on this shortly) will use\nthe Google Cloud Translate API to translate English to our language of choice.\nThis requires an API key with Google Cloud (see \nSetup\n).\n\n\nThe translate function will return unicode text. This must be turned back into\nstructured text that pandoc understands, so we have to wrap words in Str()\nand replace spaces with Space objects.\n\n\nTo do this easily with a string in panflute, use \nconvert_text()\n:\n\n\n        english = stringify(elem)\n        rooskie = english_to_russian(english)\n        new_elems = convert_text(rooskie,input_format='markdown')\n        return new_elems\n\n\n\n\n\nTo get Google Cloud Translate API working properly, \nyou must export an environment variable \n$GOOGLE_APPLICATION_CREDENTIALS\n\nthat points to a JSON file with your API keys\nEACH TIME YOU RUN THE SCRIPT!!!\n\n\n############################################\n############################################\n##############                ##############\n##############   NOTE         ##############\n##############                ##############\n##\n## This step is required for the translate\n## API calls to work. Don't leave this out.\n##\n############################################\n############################################\n\nexport GOOGLE_APPLICATION_CREDENTIALS=/path/to/project-key-00000.json",
+            "title": "Panflute: Part 1"
+        },
+        {
+            "location": "/PanfluteA/#panflute-filter-translate",
+            "text": "To translate Markdown text to Russian, we want to look for \nPara (paragraph) components, and extract the text from \neach paragraph as a string.  cat shepherd.md | pandoc -t json -f gfm -s | filters/translate.py  The  translate.py  panflute filter determines what text to translate\nand calls the Google Cloud Translate API to do the translating.  We use the Google Cloud Translate API using a Python client library\nthat they provide, rather than fussing with assembling our own \npayloads and using the  requests  library.  filters/translate.py :  from   panflute   import   *  from   google.cloud   import   translate  def   translate_document ( elem ,   doc ): \n     ...  def   main ( doc = None ): \n     return   run_filter ( translate_document ,   doc = doc )  if   __name__   ==   \"__main__\" : \n     main ()   When we run this, it passes each document element through translate_document() .   Two things we wnat to do up front:    Extract links (these are problematic for translation, \n    we deal with them by removing the link from the inline text\n    and including a list at the bottom of the document of \n    the (translated) original link text, plus the link itself.    Search for paragraphs of text, or headings, and replace text\n    with a translation.    To do the first, we define a function called  strip_links() , \nwhich will strip out all the links and add them to the bottom \nof the document (more on this in a minute).  We pass this function to  elem.walk()  to apply it to every\nelement underneath the current element. This means we can \nwrite the  strip_links()  function in a similar way to the  translate_document()  function: look for specific types of\nelements, and modify them accordingly.  def   translate_document ( elem ,   doc ): \n\n     # Walk it and look for links first \n     elem . walk ( strip_links ) \n\n     ...   Another thing we want to do is translate paragraph text from\nRussian to English. We use stringify to turn a list of Str \nand Space objects into a regular string:  def   translate_document ( elem ,   doc ): \n\n     # Walk it and look for links first \n     elem . walk ( strip_links ) \n\n     if   type ( elem ) == Para : \n         english   =   stringify ( doc ) \n         translation   =   english_to_X ( english ) \n         ...   The  english_to_X()  function (more on this shortly) will use\nthe Google Cloud Translate API to translate English to our language of choice.\nThis requires an API key with Google Cloud (see  Setup ).  The translate function will return unicode text. This must be turned back into\nstructured text that pandoc understands, so we have to wrap words in Str()\nand replace spaces with Space objects.  To do this easily with a string in panflute, use  convert_text() :          english = stringify(elem)\n        rooskie = english_to_russian(english)\n        new_elems = convert_text(rooskie,input_format='markdown')\n        return new_elems  To get Google Cloud Translate API working properly, \nyou must export an environment variable  $GOOGLE_APPLICATION_CREDENTIALS \nthat points to a JSON file with your API keys\nEACH TIME YOU RUN THE SCRIPT!!!  ############################################\n############################################\n##############                ##############\n##############   NOTE         ##############\n##############                ##############\n##\n## This step is required for the translate\n## API calls to work. Don't leave this out.\n##\n############################################\n############################################\n\nexport GOOGLE_APPLICATION_CREDENTIALS=/path/to/project-key-00000.json",
+            "title": "Panflute Filter: Translate"
+        },
+        {
+            "location": "/PanfluteB/",
+            "text": "Dealing with Links\n\u00b6\n\n\nOne of the pain points of translating a document is figuring out \nwhat to do with hyperlinks. Here's how we deal with it:\n\n\nWe have a \nprepare()\n method in our panflute filter that is run \nbefore the document filter is applied, and a \nfinalize()\n method\nthat is run after the document filter is applied.\n\n\nThe prepare method initializes an empty list to hold links.\nAs we parse each section of the document, we look for \nlinks, and when we find a link, we add the link to a list.\n\n\nWhen the text is translated, links are stripped out and \nthe original link text becomes plain text again.\nRather than try and determine which words in the \ntranslation map to the original link text,\nwe simply aggregate the links at the bottom of the \ndocument. Each link includes a translation of the \noriginal link text that is a link to the original link.\n\n\nPanflute Filter\n\u00b6\n\n\nLet's cover a bit more of the panflute magic that makes \nall of that happen.\n\n\nThis relies on two additional methods for the filter:\n\nprepare()\n and \nfinalize()\n.\n\n\nThe prepare method just creates an empty list that will\nbe used to store all of the link elements in the document:\n\n\ndef prepare(doc):\n    doc.linklist = []\n\n\n\n\n\nWe call the \nelem.walk()\n method on each element of the \ndocument, so we have a chance to see each element and \ndetermine if it is a link. If it is, we keep it simple\nand just save the entire element:\n\n\ndef strip_links(elem,doc):\n    \"\"\"\n    Each link will be stripped in the translation process.\n    Save them for the end.\n    \"\"\"\n    if isinstance(elem,Link):\n        doc.linklist.append(elem)",
+            "title": "Panflute: Part 2"
+        },
+        {
+            "location": "/PanfluteB/#dealing-with-links",
+            "text": "One of the pain points of translating a document is figuring out \nwhat to do with hyperlinks. Here's how we deal with it:  We have a  prepare()  method in our panflute filter that is run \nbefore the document filter is applied, and a  finalize()  method\nthat is run after the document filter is applied.  The prepare method initializes an empty list to hold links.\nAs we parse each section of the document, we look for \nlinks, and when we find a link, we add the link to a list.  When the text is translated, links are stripped out and \nthe original link text becomes plain text again.\nRather than try and determine which words in the \ntranslation map to the original link text,\nwe simply aggregate the links at the bottom of the \ndocument. Each link includes a translation of the \noriginal link text that is a link to the original link.",
+            "title": "Dealing with Links"
+        },
+        {
+            "location": "/PanfluteB/#panflute-filter",
+            "text": "Let's cover a bit more of the panflute magic that makes \nall of that happen.  This relies on two additional methods for the filter: prepare()  and  finalize() .  The prepare method just creates an empty list that will\nbe used to store all of the link elements in the document:  def prepare(doc):\n    doc.linklist = []  We call the  elem.walk()  method on each element of the \ndocument, so we have a chance to see each element and \ndetermine if it is a link. If it is, we keep it simple\nand just save the entire element:  def strip_links(elem,doc):\n    \"\"\"\n    Each link will be stripped in the translation process.\n    Save them for the end.\n    \"\"\"\n    if isinstance(elem,Link):\n        doc.linklist.append(elem)",
+            "title": "Panflute Filter"
+        },
+        {
+            "location": "/PandocC/",
+            "text": "Pandoc Parser: JSON-to-Markdown Parser\n\u00b6\n\n\nTo return everything back into Markdown, the last step of the pipeline\nis to add another call to pandoc, but with the formats reversed, so that\nit will turn JSON back into Markdown:\n\n\ncat shepherd.md | pandoc -t json -f gfm -s | ./panflute_rooskie.py  | pandoc -f json -t gfm -s > shepherd_ru.md",
+            "title": "Pandoc: Part 3"
+        },
+        {
+            "location": "/PandocC/#pandoc-parser-json-to-markdown-parser",
+            "text": "To return everything back into Markdown, the last step of the pipeline\nis to add another call to pandoc, but with the formats reversed, so that\nit will turn JSON back into Markdown:  cat shepherd.md | pandoc -t json -f gfm -s | ./panflute_rooskie.py  | pandoc -f json -t gfm -s > shepherd_ru.md",
+            "title": "Pandoc Parser: JSON-to-Markdown Parser"
+        },
+        {
+            "location": "/Testing/",
+            "text": "Testing\n\u00b6\n\n\nTo test the pandoc filter to make sure it is working, you can \ncreate some Markdown in a file or from the command line, and feed it\nthrough pandoc and into the filter:\n\n\n$ echo \"This is a [paragraph](https://example.com) of markdown text.\" | pandoc -t json -f gfm -s | ./ruskie.py",
+            "title": "Testing"
+        },
+        {
+            "location": "/Testing/#testing",
+            "text": "To test the pandoc filter to make sure it is working, you can \ncreate some Markdown in a file or from the command line, and feed it\nthrough pandoc and into the filter:  $ echo \"This is a [paragraph](https://example.com) of markdown text.\" | pandoc -t json -f gfm -s | ./ruskie.py",
+            "title": "Testing"
+        },
+        {
+            "location": "/Links/",
+            "text": "Useful Links\n\u00b6\n\n\n\n\n\n\nMarkdown to structured JSON using pandoc: \n\n\n\n\nText.Pandoc.JSON\n\n\n\n\n\n\n\n\nHow to write Pandoc filters using Python: \n\n\n\n\npandocfilters\n\n\n\n\n\n\n\n\nExample reading from stdin:\n\n\n\n\npandoc -t json -s | ./caps.py | pandoc -f json\n\n\n\n\n\n\n\n\nLink to examples:\n\n\n\n\npandocfilters examples\n\n\ncaps.py\n\n\n\n\n\n\n\n\nrequests library Python:\n\n\n\n\nrequests quickstart\n\n\n>>> r = requests.put('http://httpbin.org/put', data = {'key':'value'})\n\n\n\n\n\n\n\n\npandocfilters\n\n\n\n\npandocfilters\n\n\nalso see \nbut i don't want to learn haskell\n on pandoc.org.",
+            "title": "Links"
+        },
+        {
+            "location": "/Links/#useful-links",
+            "text": "Markdown to structured JSON using pandoc:    Text.Pandoc.JSON     How to write Pandoc filters using Python:    pandocfilters     Example reading from stdin:   pandoc -t json -s | ./caps.py | pandoc -f json     Link to examples:   pandocfilters examples  caps.py     requests library Python:   requests quickstart  >>> r = requests.put('http://httpbin.org/put', data = {'key':'value'})     pandocfilters   pandocfilters  also see  but i don't want to learn haskell  on pandoc.org.",
+            "title": "Useful Links"
+        }
+    ]
+}
