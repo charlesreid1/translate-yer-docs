@@ -1,11 +1,10 @@
-# russian-rainbow-mind-machine
+# translate yer docs
 
-This repository translates 
-[rainbow mind machine](https://git.charlesreid1.com/b-rainbow-mind-machine)
-documentation into Russian
-by applying the magic of 
-Google Cloud Translate API
-with a pandoc filter.
+This repository translates yer docs into another language.
+
+This uses the Google Cloud Translate API,
+pandoc, and the panflute library to create
+a translation filter for Markdown files.
 
 [How this repo is organized](Organization.md)
 
@@ -59,3 +58,4 @@ You do want to write tests for all of this stuff, don't you?
 ## Part 6: Useful Links
 
 [Part 6: Useful Links](Links.md)
+
