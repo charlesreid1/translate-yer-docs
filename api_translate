@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+import os, glob, subprocess
+import pypandoc
+
+"""
+Translate Pipeline Using Pandoc API
+
+
+Use glob to find all markdown files in `rmm/docs/`
+
+For each one, run the pipeline using api:
+    - for each document in `rmm/docs/`
+    - pandoc markdown-to-json
+    - panflute filter to translate json and extract links
+    - pandoc json-to-markdown
+    - output documents in translated_docs/
+
+TODO:
+    - call the pandoc API directly to avoid subprocess
+"""
+
+SOURCE_DOCS = 'source'
+TARGET_DOCS = 'target'
+TRANSLATE_FILTER = 'filters/translate.py'
+
+
+if not os.path.isdir(os.path.join(os.getcwd(),SOURCE_DOCS)):
+    err = "ERROR: No source docs folder found.\n"
+    err += "Looked in %s\n"%(os.path.join(os.getcwd(),SOURCE_DOCS))
+    raise Exception(err)
+
+cwd = os.getcwd()
+
+print("[+] Welcome to translate the docs!")
+
+print("[+] Making directory for translated documentation: %s"%(TARGET_DOCS))
+subprocess.call(['mkdir','-p',TARGET_DOCS], cwd=cwd)
+
+markdown_files = []
+for fdir,fdirnames,fnames in os.walk(os.path.join(os.getcwd(),SOURCE_DOCS)):
+    for f in fnames:
+        if f[-3:]=='.md':
+            markdown_files.append( os.path.join( fdir, f ) )
+
+for en_md in markdown_files:
+
+    filters = [TRANSLATE_FILTER]
+    output = pypandoc.convert_file(en_md,
+                                   to='gfm',
+                                   format='gfm',
+                                   filters=filters)
+
+    print(output)
+    print("="*40)
+    print("="*40)
+    print("="*40)
+
+print("[+] All done!")
+

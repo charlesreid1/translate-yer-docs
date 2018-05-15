@@ -2,7 +2,7 @@
 import os, glob, subprocess
 
 """
-Carry Out the Translate Task
+Translate Pipeline Using Pandoc
 
 
 Use glob to find all markdown files in `rmm/docs/`
