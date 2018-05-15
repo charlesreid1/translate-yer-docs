@@ -21,7 +21,7 @@ TODO:
 
 SOURCE_DOCS = 'source'
 TARGET_DOCS = 'target'
-TRANSLATE_FILTER = 'filters/translate.py'
+TRANSLATE_FILTER = 'filters/shift_links.py'
 
 
 if not os.path.isdir(os.path.join(os.getcwd(),SOURCE_DOCS)):
@@ -39,7 +39,11 @@ subprocess.call(['mkdir','-p',TARGET_DOCS], cwd=cwd)
 markdown_files = []
 for fdir,fdirnames,fnames in os.walk(os.path.join(os.getcwd(),SOURCE_DOCS)):
     for f in fnames:
-        if f[-3:]=='.md':
+
+        ##########
+        ## FIXME
+        #if f[-3:]=='.md':
+        if f=='index.md':
             markdown_files.append( os.path.join( fdir, f ) )
 
 for en_md in markdown_files:
@@ -51,7 +55,6 @@ for en_md in markdown_files:
                                    filters=filters)
 
     print(output)
-    print("="*40)
     print("="*40)
     print("="*40)
 
