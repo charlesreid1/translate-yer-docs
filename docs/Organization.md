@@ -1,5 +1,3 @@
-# How this repo is organized
-
 Here is a rundown of the directory structure
 of translate the docs:
 

@@ -27,14 +27,14 @@ markdown_extensions:
   - toc:
       permalink: true
 pages:
-  - 'Home':               'index.md'
-  - 'Organization':       'Organization.md'
-  - 'Setup':              'Setup.md'
-  - 'Pandoc: Part 1' :    'PandocA.md'
-  - 'Pandoc: Part 2' :    'PandocB.md'
-  - 'Panflute: Part 1' :  'PanfluteA.md'
-  - 'Panflute: Part 2' :  'PanfluteB.md'
-  - 'Pandoc: Part 3' :    'PandocC.md'
-  - 'Testing':            'Testing.md'
-  - 'Links':              'Links.md'
+  - 'Home': 'index.md'
+  - 'How This Repo is Organized' : 'Organization.md'
+  - 'Setup': 'Setup.md'
+  - 'Pandoc: Markdown to JSON' : 'PandocA.md'
+  - 'Pandoc: JSON to JSON' : 'PandocB.md'
+  - 'Panflute: Translate' : 'PanfluteA.md'
+  - 'Panflute: Page Elements' : 'PanfluteB.md'
+  - 'Pandoc: JSON to Markdown' : 'PandocC.md'
+  - 'Testing': 'Testing.md'
+  - 'Links': 'Links.md'
 

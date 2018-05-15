@@ -1,7 +1,19 @@
-## Dealing with Links
-
 One of the pain points of translating a document is figuring out 
-what to do with hyperlinks. Here's how we deal with it:
+what to do with page elements.
+
+## Links
+
+## Lists
+
+## Images
+
+## Headers
+
+
+
+## Links
+
+Take hyperlinks as an example. Here's how we deal with it:
 
 We have a `prepare()` method in our panflute filter that is run 
 before the document filter is applied, and a `finalize()` method
@@ -50,4 +62,5 @@ def strip_links(elem,doc):
         doc.linklist.append(elem)
 
 ```
+
 

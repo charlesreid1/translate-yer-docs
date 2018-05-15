@@ -1,5 +1,3 @@
-## Panflute Filter: Translate
-
 To translate Markdown text to Russian, we want to look for 
 Para (paragraph) components, and extract the text from 
 each paragraph as a string.

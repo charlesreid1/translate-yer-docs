@@ -1,4 +1,4 @@
-## Pandoc Parser: Markdown-to-JSON Parser
+This page covers the pandoc Markdown to JSON step.
 
 ### Using the Pandoc API (New Way)
 

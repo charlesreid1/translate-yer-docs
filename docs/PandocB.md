@@ -1,4 +1,4 @@
-## Pandoc Filter: JSON-to-JSON Filter
+This page covers the pandoc JSON to JSON step.
 
 To translate Markdown from English to Russian,
 we use pandoc to parse the Markdown file and 
